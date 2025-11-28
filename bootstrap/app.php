@@ -10,9 +10,14 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        // Register custom middleware
+        $middleware->alias([
+            'tutor' => App\Http\Middleware\TutorMiddleware::class,
+            'student' => App\Http\Middleware\StudentMiddleware::class,
+            'school' => App\Http\Middleware\SchoolMiddleware::class,
+        ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
